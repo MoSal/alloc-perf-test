@@ -1,0 +1,47 @@
+cargo-features = ["codegen-backend"]
+
+[package]
+name = "alloc-perf-test"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+codegen-units = 1
+lto = "fat"
+debug = "full"
+
+[profile.release-dev]
+inherits = "release"
+codegen-units = 8
+lto = "off"
+
+[profile.release-dev-cl]
+inherits = "release-dev"
+codegen-backend = "cranelift"
+
+[dependencies]
+# util/misc
+thiserror = "^1.0.50"
+chrono = { version = "^0.4.31" }
+regex = "^1.10.2"
+
+# logging/tracing
+tracing = "^0.1.40"
+tracing-subscriber = { version = "^0.3.17", features = ["env-filter"] }
+
+# cli
+clap = { version = "^4.4.7", features = ["derive"] }
+
+# (de)serialization / (de)compression
+speedy = "^0.8.6"
+lz4_flex = "^0.11.3"
+
+# async/fs/net
+async-global-executor = { version = "^2.3.1" }
+futures-lite = "^2.3.0"
+blocking = "^1.4.1"
+async-fs = "^2.1.2"
+
+# alloc perf experiment
+fastrand = { version = "^2.1.0", default-features = false }
+itertools = { version = "^0.13.0" }
