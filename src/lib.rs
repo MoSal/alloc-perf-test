@@ -1,6 +1,7 @@
 #![feature(try_blocks)]
 #![feature(let_chains)]
 #![feature(iter_array_chunks)]
+#![feature(lazy_cell)] // for bootstrapping from stable
 
 mod try_util;
 mod deserialize_util;
