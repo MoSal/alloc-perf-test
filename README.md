@@ -69,6 +69,8 @@ shouldn't change.
 
 [Related discussion](https://github.com/chimera-linux/cports/discussions/2480).
 
+A similar test on a Laptop with half-sized data set is at [laptop_bench.md](./laptop_bench.md).
+
 Tested on a system with i7-7700K processor (4 cores/8 threads) with maximum frequency limited to 3900MHz, fast NVMe storage, and plenty of RAM space to spare.
 
 Generated data with defaults (`-n 8 -s 100`):
@@ -132,7 +134,6 @@ Benchmark 1: LD_PRELOAD=/snmalloc/build/libsnmallocshim-checks.so ./target/relea
 ```
 
 ### Archlinux
-
 
 #### `-n 8` (default)
 
