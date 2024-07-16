@@ -89,6 +89,13 @@ Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf
 ```
 
 ```
+# hyperfine -r 10 'SCUDO_OPTIONS=release_to_os_interval_ms=-1 ./target/release/alloc-perf-test test-alloc-perf'
+Benchmark 1: SCUDO_OPTIONS=release_to_os_interval_ms=-1 ./target/release/alloc-perf-test test-alloc-perf
+  Time (mean ± σ):     21.129 s ±  1.603 s    [User: 63.501 s, System: 13.188 s]
+  Range (min … max):   18.665 s … 23.663 s    10 runs
+```
+
+```
 # hyperfine -r 10 'LD_PRELOAD=/mimalloc/build/libmimalloc-secure.so ./target/release/alloc-perf-test test-alloc-perf'
 Benchmark 1: LD_PRELOAD=/mimalloc/build/libmimalloc-secure.so ./target/release/alloc-perf-test test-alloc-perf
   Time (mean ± σ):      6.332 s ±  0.084 s    [User: 27.682 s, System: 6.665 s]
@@ -109,6 +116,13 @@ Benchmark 1: LD_PRELOAD=/snmalloc/build/libsnmallocshim-checks.so ./target/relea
 Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf -n 4
   Time (mean ± σ):     22.503 s ±  0.602 s    [User: 34.273 s, System: 4.796 s]
   Range (min … max):   21.830 s … 23.709 s    10 runs
+```
+
+```
+# hyperfine -r 10 'SCUDO_OPTIONS=release_to_os_interval_ms=-1 ./target/release/alloc-perf-test test-alloc-perf -n 4'
+Benchmark 1: SCUDO_OPTIONS=release_to_os_interval_ms=-1 ./target/release/alloc-perf-test test-alloc-perf -n 4
+  Time (mean ± σ):      7.095 s ±  0.319 s    [User: 17.341 s, System: 2.771 s]
+  Range (min … max):    6.559 s …  7.610 s    10 runs
 ```
 
 ```
@@ -145,6 +159,13 @@ Benchmark 1: LD_PRELOAD=/tmp/libscudo.so ./target/release/alloc-perf-test test-a
 ```
 
 ```
+% hyperfine -r 10 'SCUDO_OPTIONS=release_to_os_interval_ms=-1 LD_PRELOAD=/tmp/libscudo.so ./target/release/alloc-perf-test test-alloc-perf'
+Benchmark 1: SCUDO_OPTIONS=release_to_os_interval_ms=-1 LD_PRELOAD=/tmp/libscudo.so ./target/release/alloc-perf-test test-alloc-perf
+  Time (mean ± σ):     19.844 s ±  0.082 s    [User: 52.574 s, System: 12.308 s]
+  Range (min … max):   19.737 s … 19.992 s    10 runs
+```
+
+```
 % hyperfine -r 10 'LD_PRELOAD=/tmp/libmimalloc-secure.so ./target/release/alloc-perf-test test-alloc-perf'
 Benchmark 1: LD_PRELOAD=/tmp/libmimalloc-secure.so ./target/release/alloc-perf-test test-alloc-perf
   Time (mean ± σ):      6.097 s ±  0.099 s    [User: 25.514 s, System: 6.884 s]
@@ -172,6 +193,13 @@ Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf -n 4
 Benchmark 1: LD_PRELOAD=/tmp/libscudo.so ./target/release/alloc-perf-test test-alloc-perf -n 4
   Time (mean ± σ):      7.951 s ±  0.110 s    [User: 17.179 s, System: 4.435 s]
   Range (min … max):    7.724 s …  8.099 s    10 runs
+```
+
+```
+% hyperfine -r 10 'SCUDO_OPTIONS=release_to_os_interval_ms=-1 LD_PRELOAD=/tmp/libscudo.so ./target/release/alloc-perf-test test-alloc-perf -n 4'
+Benchmark 1: SCUDO_OPTIONS=release_to_os_interval_ms=-1 LD_PRELOAD=/tmp/libscudo.so ./target/release/alloc-perf-test test-alloc-perf -n 4
+  Time (mean ± σ):      6.966 s ±  0.059 s    [User: 15.262 s, System: 3.455 s]
+  Range (min … max):    6.873 s …  7.062 s    10 runs
 ```
 
 ```
