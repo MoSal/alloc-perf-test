@@ -90,6 +90,19 @@ Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf
 ```
 
 ```
+# musl built with --with-malloc=mallocng
+Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf
+  Time (mean ± σ):     64.292 s ±  0.652 s    [User: 212.194 s, System: 150.035 s]
+  Range (min … max):   63.081 s … 65.057 s    10 runs
+```
+
+```
+# musl built with --with-malloc=oldmalloc
+  Time (mean ± σ):     151.351 s ±  4.249 s    [User: 400.331 s, System: 373.181 s]
+  Range (min … max):   148.193 s … 162.803 s    10 runs
+```
+
+```
 Benchmark 1: SCUDO_OPTIONS=release_to_os_interval_ms=-1 ./target/release/alloc-perf-test test-alloc-perf
   Time (mean ± σ):     21.129 s ±  1.603 s    [User: 63.501 s, System: 13.188 s]
   Range (min … max):   18.665 s … 23.663 s    10 runs
@@ -113,6 +126,20 @@ Benchmark 1: LD_PRELOAD=/snmalloc/build/libsnmallocshim-checks.so ./target/relea
 Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf -n 4
   Time (mean ± σ):     22.503 s ±  0.602 s    [User: 34.273 s, System: 4.796 s]
   Range (min … max):   21.830 s … 23.709 s    10 runs
+```
+
+```
+# musl built with --with-malloc=mallocng
+Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf -n 4
+  Time (mean ± σ):     28.775 s ±  0.474 s    [User: 66.112 s, System: 30.042 s]
+  Range (min … max):   28.023 s … 29.676 s    10 runs
+```
+
+```
+# musl built with --with-malloc=oldmalloc
+Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf -n 4
+  Time (mean ± σ):     24.663 s ±  0.245 s    [User: 85.588 s, System: 5.029 s]
+  Range (min … max):   24.264 s … 25.015 s    10 runs
 ```
 
 ```
