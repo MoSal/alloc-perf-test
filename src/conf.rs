@@ -111,6 +111,7 @@ impl Subs {
                 Ok(Ok(e_map_opt)) => e_maps.push(e_map_opt),
             }
         }
+        println!("{}", EBESMap::multi_to_formatted_list(&e_maps));
         Ok(())
     }
 }

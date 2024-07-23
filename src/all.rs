@@ -337,4 +337,26 @@ impl EBESMap {
         Ok(ExtractedBooiesExampleStweem { name, url })
 
     }
+    pub(crate) fn multi_to_formatted_list<'a>(multi: &'a [Option<Self>]) -> String {
+        let flat_e_st_list = multi
+            .iter()
+            .filter_map(Option::as_ref)
+            .map(|e_st_map| e_st_map.0.values())
+            .map(|e_vecs| e_vecs.into_iter().flatten())
+            .flatten()
+            .collect::<Vec<_>>();
+        let mut ret = String::with_capacity(flat_e_st_list.len()*512);
+        ret.push_str("##Random Text File Format Header##");
+        flat_e_st_list
+            .into_iter()
+            .for_each(|e_st| {
+                ret.push_str("#NAME#");
+                ret.push_str(&e_st.name);
+                ret.push('\n');
+                ret.push_str("#URL#");
+                ret.push_str(&e_st.url);
+                ret.push('\n');
+            });
+        ret
+    }
 }
