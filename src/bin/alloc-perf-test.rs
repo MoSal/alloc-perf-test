@@ -21,6 +21,15 @@ use tracing_subscriber::EnvFilter;
 
 use std::io;
 
+#[cfg(feature = "stats_alloc")]
+use stats_alloc::{StatsAlloc, INSTRUMENTED_SYSTEM};
+#[cfg(feature = "stats_alloc")]
+use std::alloc::System;
+
+#[cfg(feature = "stats_alloc")]
+#[global_allocator]
+static GLOBAL: &StatsAlloc<System> = &INSTRUMENTED_SYSTEM;
+
 fn main() -> alloc_perf_test::AllocPerfRes<()> {
     /*
     use io::Read;
@@ -36,6 +45,14 @@ fn main() -> alloc_perf_test::AllocPerfRes<()> {
         .with_writer(|| io::stderr())
         .init();
 
+    #[cfg(feature = "stats_alloc")]
+    let stats_alloc_reg = stats_alloc::Region::new(&GLOBAL);
+    //eprintln!("INIT\n{:#?}", stats_alloc_reg.initial());
+
     std::env::set_var("ASYNC_GLOBAL_EXECUTOR_THREADS", "16");
-    async_global_executor::block_on(alloc_perf_test::cli::cli())
+    let ret = async_global_executor::block_on(alloc_perf_test::cli::cli());
+
+    #[cfg(feature = "stats_alloc")]
+    eprintln!("{:#?}", stats_alloc_reg.change());
+    ret
 }
