@@ -225,3 +225,37 @@ Benchmark 1: LD_PRELOAD=/tmp/libsnmallocshim-checks.so ./target/release/alloc-pe
   Time (mean ± σ):      2.214 s ±  0.034 s    [User: 6.601 s, System: 1.022 s]
   Range (min … max):    2.156 s …  2.273 s    10 runs
 ```
+
+###  Parallelism Performance Degradation
+
+Below, we record the effect of increased parallelism from `-n 4` to `-n 8` (default).
+
+Numbers are calculated as:
+
+```
+time(n8) / time(n4) / (size(n8) / size(n4))
+```
+
+Mean numbers are used for time.
+
+In the tested dataset, the data size of `-n 8`/`-n 4` is `~1.98382`.
+
+Numbers significantly bigger than `1.00` may indicate degraded performance from increased parallelism.
+
+Numbers significantly smaller than `1.00` may indicate non-optimal performance with less parallelism.
+
+Incidentally (or maybe not so), the fastest allocator is also the closest to `1.00`.
+
+| Test | Degradation |
+|:----:|:----:|
+| Chimera (default) | 1.61407 |
+| Chimera (no release) | 1.50115 |
+| Chimera (`mallocng`) | 1.12626 |
+| Chimera (`oldmalloc`) | 3.09341 |
+| Chimera (`libmimalloc-secure`) | 0.84062 |
+| Chimera (`libsnmallocshim-checks`) | 0.95329 |
+| Arch (glibc) | 0.71687 |
+| Arch (`libscudo`) | 1.49715 |
+| Arch (`libscudo` / no release) | 1.43596 |
+| Arch (`libmimalloc-secure`) | 0.82885 |
+| Arch (`libsnmallocshim-checks`) | 0.99723 |
