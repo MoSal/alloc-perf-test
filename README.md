@@ -225,7 +225,3 @@ Benchmark 1: LD_PRELOAD=/tmp/libsnmallocshim-checks.so ./target/release/alloc-pe
   Time (mean ± σ):      2.214 s ±  0.034 s    [User: 6.601 s, System: 1.022 s]
   Range (min … max):    2.156 s …  2.273 s    10 runs
 ```
-
-----
-
-Didn't test Alpine because life is too short.
