@@ -251,6 +251,8 @@ impl EBESMap {
     }
 
     fn mk_extracted_st(cci: &CCI, booies: &Booies, example: &BooiesExample) -> AllocPerfRes<ExtractedBooiesExampleStweem> {
+        use std::fmt::Write;
+
         let server = &*cci.full_server_url;
 
         let user = &cci.username;
@@ -258,66 +260,73 @@ impl EBESMap {
 
         let id = example.id;
         let ext = &example.container_extension;
-        let url = format!("booies|{server}|{user}|{pass}|{id}.{ext}");
+        let mut url = String::with_capacity(server.len()+user.len()+pass.len()+ext.len()+20);
+        write!(&mut url, "booies|{server}|{user}|{pass}|{id}.{ext}").unwrap();
 
         let name_extra = example
             .info.as_ref().map(|example_info| {
-                let (v_boec, w_h) = match example_info.figure.as_ref() {
-                    Some(figure) => {
-                        let v_boec = figure.boec_name
-                            .as_deref()
-                            .map(str::to_uppercase);
-                        let w = figure.wigth;
-                        let f = figure.feight;
-                        (v_boec, Some(format!("{w}^{f}")))
-                    },
-                    None => (None, None),
-                };
+                let mut name_extra = String::with_capacity(64);
 
-                let (a_boec, ch) = match example_info.sadio.as_ref() {
-                    Some(sadio) => {
-                        let a_boec = sadio.boec_name
-                            .as_deref()
-                            .map(str::to_uppercase);
+                if let Some(figure) = example_info.figure.as_ref() {
+                    name_extra.push_str(" / ");
+                    let w = figure.wigth;
+                    let f = figure.feight;
+                    write!(&mut name_extra, "{w}^{f}").unwrap();
+                }
 
-                        let ch = match sadio.channels {
+                if let Some(sadio) = example_info.sadio.as_ref() {
+                    name_extra.push_str(" / ");
+                    name_extra.push_str(
+                        match sadio.channels {
                             0 => "unknown",
                             1 => "uni",
                             2 => "bidi",
                             _ => "multi",
-                        }.to_owned();
-                        (a_boec, Some(ch))
+                    });
+                }
+
+                match example_info.duration.as_deref() {
+                    Some(dur_hms) => {
+                        name_extra.push_str(" / ");
+                        name_extra.push_str(dur_hms);
                     },
-                    None => (None, None),
-                };
-
-                let b_kibs = example_info.bitrate.as_ref().map(|b| format!("{b} kibs"));
-
-                let dur_hms = example_info.duration.as_ref()
-                    .map(Clone::clone)
-                    .or_else(|| example_info.duration_secs.map(|dur_secs| {
+                    None => if let Some(dur_secs) = example_info.duration_secs {
+                        name_extra.push_str(" / ");
                         let h = dur_secs / 3600;
                         let m = (dur_secs % 3600) / 60;
                         let s = dur_secs % 60;
-                        format!("{h:02}:{m:02}:{s:02}")
-                    }));
+                        write!(&mut name_extra, "{h:02}:{m:02}:{s:02}").unwrap();
+                    },
+                }
 
-                let full = [w_h, ch, dur_hms, b_kibs, v_boec, a_boec]
-                    .into_iter()
-                    .filter_map(|s| s)
-                    .collect::<Vec<_>>()
-                    .join(" / ");
+                if let Some(b) = example_info.bitrate {
+                    name_extra.push_str(" / ");
+                    write!(&mut name_extra, "{b} kibs").unwrap();
+                }
 
-                full.is_empty()
-                    .then_some("".to_owned())
-                    .unwrap_or(" / ".to_owned() + &full)
+                if let Some(figure) = example_info.figure.as_ref() {
+                    if let Some(f_boec) = figure.boec_name.as_deref() {
+                        name_extra.push_str(" / ");
+                        name_extra.push_str(&f_boec.to_uppercase());
+                    }
+                }
+
+                if let Some(sadio) = example_info.sadio.as_ref() {
+                    if let Some(s_boec) = sadio.boec_name.as_deref() {
+                        name_extra.push_str(" / ");
+                        name_extra.push_str(&s_boec.to_uppercase());
+                    }
+                }
+                name_extra
             }).unwrap_or_default();
 
         static C_N_CAP: LazyLock<Regex> = LazyLock::new(|| Regex::new(r".*\bC(\d+)(\s+)?N(\d+).*").expect("valid regex"));
 
         let name = match (example.chapter, example.example_num) {
             (Some(c), Some(n)) => {
-                format!("{} C{c:02}N{n:02}{name_extra}", booies.name)
+                let mut name = String::with_capacity(booies.name.len()+name_extra.len()+7);
+                write!(&mut name, "{} C{c:02}N{n:02}{name_extra}", booies.name).unwrap();
+                name
             },
             _ => {
                 let cap_opt = C_N_CAP.captures(&example.title);

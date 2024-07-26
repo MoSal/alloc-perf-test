@@ -102,80 +102,80 @@ Below numbers belong to the currently checked out branch.
 
 ```
 Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf
-  Time (mean ± σ):     72.055 s ±  1.265 s    [User: 123.700 s, System: 18.988 s]
-  Range (min … max):   70.321 s … 73.915 s    10 runs
+  Time (mean ± σ):     69.909 s ±  1.920 s    [User: 107.816 s, System: 18.912 s]
+  Range (min … max):   67.537 s … 73.194 s    10 runs
 ```
 
 ```
 # musl built with --with-malloc=mallocng
 Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf
-  Time (mean ± σ):     64.292 s ±  0.652 s    [User: 212.194 s, System: 150.035 s]
-  Range (min … max):   63.081 s … 65.057 s    10 runs
+  Time (mean ± σ):     32.669 s ±  1.752 s    [User: 99.946 s, System: 69.685 s]
+  Range (min … max):   30.495 s … 36.123 s    10 runs
 ```
 
 ```
 # musl built with --with-malloc=oldmalloc
 Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf
-  Time (mean ± σ):     151.351 s ±  4.249 s    [User: 400.331 s, System: 373.181 s]
-  Range (min … max):   148.193 s … 162.803 s    10 runs
+  Time (mean ± σ):     89.478 s ±  0.406 s    [User: 214.957 s, System: 226.522 s]
+  Range (min … max):   88.767 s … 90.021 s    10 runs
 ```
 
 ```
 Benchmark 1: SCUDO_OPTIONS=release_to_os_interval_ms=-1 ./target/release/alloc-perf-test test-alloc-perf
-  Time (mean ± σ):     21.129 s ±  1.603 s    [User: 63.501 s, System: 13.188 s]
-  Range (min … max):   18.665 s … 23.663 s    10 runs
+  Time (mean ± σ):     19.840 s ±  0.803 s    [User: 47.922 s, System: 13.896 s]
+  Range (min … max):   18.742 s … 21.073 s    10 runs
 ```
 
 ```
 Benchmark 1: LD_PRELOAD=/mimalloc/build/libmimalloc-secure.so ./target/release/alloc-perf-test test-alloc-perf
-  Time (mean ± σ):      6.332 s ±  0.084 s    [User: 27.682 s, System: 6.665 s]
-  Range (min … max):    6.235 s …  6.498 s    10 runs
+  Time (mean ± σ):      5.222 s ±  0.104 s    [User: 19.823 s, System: 6.596 s]
+  Range (min … max):    5.096 s …  5.416 s    10 runs
 ```
 
 ```
 Benchmark 1: LD_PRELOAD=/snmalloc/build/libsnmallocshim-checks.so ./target/release/alloc-perf-test test-alloc-perf
-  Time (mean ± σ):      4.187 s ±  0.125 s    [User: 21.783 s, System: 3.589 s]
-  Range (min … max):    4.010 s …  4.394 s    10 runs
+  Time (mean ± σ):      3.621 s ±  0.082 s    [User: 16.906 s, System: 4.160 s]
+  Range (min … max):    3.528 s …  3.766 s    10 runs
 ```
 
 #### `-n 4` (= CPU cores)
 
 ```
 Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf -n 4
-  Time (mean ± σ):     22.503 s ±  0.602 s    [User: 34.273 s, System: 4.796 s]
-  Range (min … max):   21.830 s … 23.709 s    10 runs
+  Time (mean ± σ):     21.300 s ±  0.679 s    [User: 30.114 s, System: 4.826 s]
+  Range (min … max):   20.338 s … 22.505 s    10 runs
 ```
 
 ```
 # musl built with --with-malloc=mallocng
 Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf -n 4
-  Time (mean ± σ):     28.775 s ±  0.474 s    [User: 66.112 s, System: 30.042 s]
-  Range (min … max):   28.023 s … 29.676 s    10 runs
+  Time (mean ± σ):     13.886 s ±  0.135 s    [User: 29.156 s, System: 13.882 s]
+  Range (min … max):   13.691 s … 14.055 s    10 runs
 ```
 
 ```
 # musl built with --with-malloc=oldmalloc
 Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf -n 4
-  Time (mean ± σ):     24.663 s ±  0.245 s    [User: 85.588 s, System: 5.029 s]
-  Range (min … max):   24.264 s … 25.015 s    10 runs
+  Time (mean ± σ):     14.604 s ±  0.099 s    [User: 49.155 s, System: 4.059 s]
+  Range (min … max):   14.492 s … 14.811 s    10 runs
 ```
 
 ```
 Benchmark 1: SCUDO_OPTIONS=release_to_os_interval_ms=-1 ./target/release/alloc-perf-test test-alloc-perf -n 4
-  Time (mean ± σ):      7.095 s ±  0.319 s    [User: 17.341 s, System: 2.771 s]
-  Range (min … max):    6.559 s …  7.610 s    10 runs
+  Time (mean ± σ):      5.626 s ±  0.401 s    [User: 12.570 s, System: 2.867 s]
+  Range (min … max):    4.923 s …  6.077 s    10 runs
 ```
 
 ```
 Benchmark 1: LD_PRELOAD=/mimalloc/build/libmimalloc-secure.so ./target/release/alloc-perf-test test-alloc-perf -n 4
-  Time (mean ± σ):      3.797 s ±  0.072 s    [User: 8.899 s, System: 2.579 s]
-  Range (min … max):    3.681 s …  3.900 s    10 runs
+  Time (mean ± σ):      3.223 s ±  0.025 s    [User: 6.884 s, System: 2.589 s]
+  Range (min … max):    3.185 s …  3.257 s    10 runs
 ```
 
 ```
 Benchmark 1: LD_PRELOAD=/snmalloc/build/libsnmallocshim-checks.so ./target/release/alloc-perf-test test-alloc-perf -n 4
-  Time (mean ± σ):      2.214 s ±  0.062 s    [User: 6.544 s, System: 0.930 s]
-  Range (min … max):    2.097 s …  2.326 s    10 runs
+  Time (mean ± σ):      1.771 s ±  0.080 s    [User: 5.422 s, System: 0.976 s]
+  Range (min … max):    1.633 s …  1.878 s    10 runs
 ```
 
 ### Archlinux
@@ -184,64 +184,64 @@ Benchmark 1: LD_PRELOAD=/snmalloc/build/libsnmallocshim-checks.so ./target/relea
 
 ```
 Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf
-  Time (mean ± σ):      9.544 s ±  1.735 s    [User: 33.877 s, System: 13.351 s]
-  Range (min … max):    7.889 s … 13.886 s    10 runs
+  Time (mean ± σ):      5.274 s ±  0.070 s    [User: 19.899 s, System: 7.920 s]
+  Range (min … max):    5.160 s …  5.421 s    10 runs
 ```
 
 ```
 Benchmark 1: LD_PRELOAD=/tmp/libscudo.so ./target/release/alloc-perf-test test-alloc-perf
-  Time (mean ± σ):     23.615 s ±  0.151 s    [User: 63.080 s, System: 16.143 s]
-  Range (min … max):   23.382 s … 23.913 s    10 runs
+  Time (mean ± σ):     24.422 s ±  0.745 s    [User: 57.003 s, System: 16.837 s]
+  Range (min … max):   23.142 s … 25.449 s    10 runs
 ```
 
 ```
 Benchmark 1: SCUDO_OPTIONS=release_to_os_interval_ms=-1 LD_PRELOAD=/tmp/libscudo.so ./target/release/alloc-perf-test test-alloc-perf
-  Time (mean ± σ):     19.844 s ±  0.082 s    [User: 52.574 s, System: 12.308 s]
-  Range (min … max):   19.737 s … 19.992 s    10 runs
+  Time (mean ± σ):     19.029 s ±  0.151 s    [User: 44.179 s, System: 11.964 s]
+  Range (min … max):   18.860 s … 19.343 s    10 runs
 ```
 
 ```
 Benchmark 1: LD_PRELOAD=/tmp/libmimalloc-secure.so ./target/release/alloc-perf-test test-alloc-perf
-  Time (mean ± σ):      6.097 s ±  0.099 s    [User: 25.514 s, System: 6.884 s]
-  Range (min … max):    5.893 s …  6.224 s    10 runs
+  Time (mean ± σ):      5.248 s ±  0.065 s    [User: 18.493 s, System: 6.848 s]
+  Range (min … max):    5.160 s …  5.352 s    10 runs
 ```
 
 ```
 Benchmark 1: LD_PRELOAD=/tmp/libsnmallocshim-checks.so ./target/release/alloc-perf-test test-alloc-perf
-  Time (mean ± σ):      4.380 s ±  0.186 s    [User: 22.392 s, System: 4.062 s]
-  Range (min … max):    4.178 s …  4.803 s    10 runs
+  Time (mean ± σ):      4.060 s ±  0.100 s    [User: 17.137 s, System: 5.042 s]
+  Range (min … max):    3.870 s …  4.220 s    10 runs
 ```
 
 #### `-n 4` (= CPU cores)
 
 ```
 Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf -n 4
-  Time (mean ± σ):      6.711 s ±  1.667 s    [User: 13.896 s, System: 5.977 s]
-  Range (min … max):    4.423 s … 10.467 s    10 runs
+  Time (mean ± σ):      3.000 s ±  0.089 s    [User: 6.731 s, System: 2.697 s]
+  Range (min … max):    2.847 s …  3.119 s    10 runs
 ```
 
 ```
 Benchmark 1: LD_PRELOAD=/tmp/libscudo.so ./target/release/alloc-perf-test test-alloc-perf -n 4
-  Time (mean ± σ):      7.951 s ±  0.110 s    [User: 17.179 s, System: 4.435 s]
-  Range (min … max):    7.724 s …  8.099 s    10 runs
+  Time (mean ± σ):      7.629 s ±  0.130 s    [User: 15.287 s, System: 4.828 s]
+  Range (min … max):    7.424 s …  7.768 s    10 runs
 ```
 
 ```
 Benchmark 1: SCUDO_OPTIONS=release_to_os_interval_ms=-1 LD_PRELOAD=/tmp/libscudo.so ./target/release/alloc-perf-test test-alloc-perf -n 4
-  Time (mean ± σ):      6.966 s ±  0.059 s    [User: 15.262 s, System: 3.455 s]
-  Range (min … max):    6.873 s …  7.062 s    10 runs
+  Time (mean ± σ):      6.522 s ±  0.101 s    [User: 13.086 s, System: 3.534 s]
+  Range (min … max):    6.328 s …  6.637 s    10 runs
 ```
 
 ```
 Benchmark 1: LD_PRELOAD=/tmp/libmimalloc-secure.so ./target/release/alloc-perf-test test-alloc-perf -n 4
-  Time (mean ± σ):      3.708 s ±  0.075 s    [User: 8.270 s, System: 2.665 s]
-  Range (min … max):    3.599 s …  3.810 s    10 runs
+  Time (mean ± σ):      3.204 s ±  0.134 s    [User: 6.527 s, System: 2.682 s]
+  Range (min … max):    3.002 s …  3.493 s    10 runs
 ```
 
 ```
 Benchmark 1: LD_PRELOAD=/tmp/libsnmallocshim-checks.so ./target/release/alloc-perf-test test-alloc-perf -n 4
-  Time (mean ± σ):      2.214 s ±  0.034 s    [User: 6.601 s, System: 1.022 s]
-  Range (min … max):    2.156 s …  2.273 s    10 runs
+  Time (mean ± σ):      1.883 s ±  0.050 s    [User: 5.483 s, System: 1.062 s]
+  Range (min … max):    1.786 s …  1.945 s    10 runs
 ```
 
 ###  Parallelism Performance Degradation
@@ -266,14 +266,14 @@ Incidentally (or maybe not so), the fastest allocator is also the closest to `1.
 
 | Test | Degradation |
 |:----:|:----:|
-| Chimera (default) | 1.61407 |
-| Chimera (no release) | 1.50115 |
-| Chimera (`mallocng`) | 1.12626 |
-| Chimera (`oldmalloc`) | 3.09341 |
-| Chimera (`libmimalloc-secure`) | 0.84062 |
-| Chimera (`libsnmallocshim-checks`) | 0.95329 |
-| Arch (glibc) | 0.71687 |
-| Arch (`libscudo`) | 1.49715 |
-| Arch (`libscudo` / no release) | 1.43596 |
-| Arch (`libmimalloc-secure`) | 0.82885 |
-| Arch (`libsnmallocshim-checks`) | 0.99723 |
+| Chimera (default) | 1.65444 |
+| Chimera (no release) | 1.77762 |
+| Chimera (`mallocng`) | 1.18592 |
+| Chimera (`oldmalloc`) | 3.08846 |
+| Chimera (`libmimalloc-secure`) | 0.81672 |
+| Chimera (`libsnmallocshim-checks`) | 1.03064 |
+| Arch (glibc) | 0.88617 |
+| Arch (`libscudo`) | 1.61366 |
+| Arch (`libscudo` / no release) | 1.47073 |
+| Arch (`libmimalloc-secure`) | 0.82566 |
+| Arch (`libsnmallocshim-checks`) | 1.08685 |
