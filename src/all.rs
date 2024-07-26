@@ -202,7 +202,7 @@ pub(crate) struct ExtractedBooiesExampleStweem {
     url: String,
 }
 
-pub(crate) struct EBESMap(BTreeMap<u64, Vec<ExtractedBooiesExampleStweem>>);
+pub(crate) struct EBESMap(BTreeMap<u64, &'static [ExtractedBooiesExampleStweem]>);
 
 impl EBESMap {
     fn _final_filtered_list<'a>(booies_index: &'a BooiesIndex) -> impl Iterator<Item=&'a Booies> + 'a {
@@ -227,11 +227,15 @@ impl EBESMap {
             .map(|(num, examples)| {
                 Ok((
                     num,
-                    examples.values()
+                {
+                    let ret_vec = examples.values()
                         .flatten()
                         .into_iter()
                         .map(|example| Self::mk_extracted_st(&cci, &booies_index.list[&num], &example))
-                        .collect::<AllocPerfRes<Vec<_>>>()?,
+                        .collect::<AllocPerfRes<Vec<_>>>()?;
+                    let ret: &'static [_] = ret_vec.leak();
+                    ret
+                },
                  ))
             })
             .collect::<AllocPerfRes<BTreeMap<_, _>>>()?;
@@ -306,18 +310,20 @@ impl EBESMap {
 
                 if let Some(figure) = example_info.figure.as_ref() {
                     if let Some(f_boec) = figure.boec_name.as_deref() {
+                        let f_boec = f_boec.to_uppercase().leak();
                         name_extra.push_str(" / ");
-                        name_extra.push_str(&f_boec.to_uppercase());
+                        name_extra.push_str(f_boec);
                     }
                 }
 
                 if let Some(sadio) = example_info.sadio.as_ref() {
                     if let Some(s_boec) = sadio.boec_name.as_deref() {
+                        let s_boec = s_boec.to_uppercase().leak();
                         name_extra.push_str(" / ");
-                        name_extra.push_str(&s_boec.to_uppercase());
+                        name_extra.push_str(&s_boec);
                     }
                 }
-                name_extra
+                name_extra.leak()
             }).unwrap_or_default();
 
         static C_N_CAP: LazyLock<Regex> = LazyLock::new(|| Regex::new(r".*\bC(\d+)(\s+)?N(\d+).*").expect("valid regex"));
@@ -351,7 +357,8 @@ impl EBESMap {
             .iter()
             .filter_map(Option::as_ref)
             .map(|e_st_map| e_st_map.0.values())
-            .map(|e_vecs| e_vecs.into_iter().flatten())
+            .flatten()
+            .map(|arr| arr.iter())
             .flatten()
             .collect::<Vec<_>>();
         let mut ret = String::with_capacity(flat_e_st_list.len()*512);
