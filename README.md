@@ -17,6 +17,23 @@ It's possible to build with a stable toolchain like this:
 RUSTC_BOOTSTRAP=1 cargo build --release
 ```
 
+### Allocation stats
+
+A `stats_alloc` feature exists which, when enabled, will print overall allocation stats after a run is finished.
+This should incur less performance overhead compared to using other tools like `DHAT`.
+Since this won't be used with maximum performance in mind, and for quick iteration, it might be a good idea to use
+this with quick builds that use `cranelift` for code generation:
+
+```
+cargo build --features=stats_alloc --profile release-dev-cl
+```
+
+Binary built will be at `./target/release-dev-cl/alloc-perf-test`.
+
+This requires `cranelift` to be available in as a code-generator in the Rust tooling. This is done usually by installing a `rustup` component.
+
+### Parallelism
+
 To change the parallelization level, change the value of `SPAWN_CHUNK_SZ` (set to 8) in `src/lib.rs`.
 And if going beyond 16 parallel tasks is required, changing the value
 `ASYNC_GLOBAL_EXECUTOR_THREADS` is set to in `src/bin/alloc-perf-test.rs` is also required.
