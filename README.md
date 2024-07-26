@@ -90,11 +90,11 @@ Tested on a system with i7-7700K processor (4 cores/8 threads) with maximum freq
 
 Generated data with defaults (`-n 8 -s 100`):
 
-Below numbers below to the currently checked out branch.
-
 ```
 ./target/release/alloc-perf-test gen-data
 ```
+
+Below numbers belong to the currently checked out branch.
 
 ### Chimera (container)
 
