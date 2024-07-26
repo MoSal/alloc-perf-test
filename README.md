@@ -98,6 +98,7 @@ Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf
 
 ```
 # musl built with --with-malloc=oldmalloc
+Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf
   Time (mean ± σ):     151.351 s ±  4.249 s    [User: 400.331 s, System: 373.181 s]
   Range (min … max):   148.193 s … 162.803 s    10 runs
 ```
