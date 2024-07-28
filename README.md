@@ -277,3 +277,33 @@ Incidentally (or maybe not so), the fastest allocator is also the closest to `1.
 | Arch (`libscudo` / no release) | 1.25232 |
 | Arch (`libmimalloc-secure`) | 0.80922 |
 | Arch (`libsnmallocshim-checks`) | 0.98460 |
+
+### Max memory (RSS) usage
+
+Picking the largest number in three runs using:
+
+```
+for _ in {1..3}; do >/tmp/lines;  while [[ -z `cat /tmp/lines` ]] || pidof alloc-perf-test &>/dev/null; do sleep 0.01; grep '^VmRSS' /proc/`pidof alloc-perf-test`/status >>/tmp/lines 2>/dev/null; done; sort -h /tmp/lines | tail -1; done
+```
+
+Runs done like this:
+
+```
+for _ in {1..3}; do [env_vars] ./target/release/alloc-perf-test test-alloc-perf [-n 4]; sleep 1 ; done
+```
+
+***Numbers in GiB units.***
+
+| Test | `-n 4` | `-n 8` (default) |
+|:----:|:----:|:--------:|
+| Chimera (default) | 3.86 | 7.23 |
+| Chimera (no release) | 4.14 | 7.78 |
+| Chimera (`mallocng`) | 3.27 | 6.21 |
+| Chimera (`oldmalloc`) | 3.62 | 6.76 |
+| Chimera (`libmimalloc-secure`) | 3.77 | 6.92 |
+| Chimera (`libsnmallocshim-checks`) | 4.02 | 8.38 |
+| Arch (glibc) | 3.66 | 7.21 |
+| Arch (`libscudo`) | 3.73 | 7.18 |
+| Arch (`libscudo` / no release) | 4.01 | 7.62 |
+| Arch (`libmimalloc-secure`) | 3.54 | 7.00 |
+| Arch (`libsnmallocshim-checks`) | 4.32 | 8.65 |
