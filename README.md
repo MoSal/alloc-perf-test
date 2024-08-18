@@ -90,6 +90,8 @@ Tested on a system with i7-7700K processor (4 cores/8 threads) with maximum freq
 
 Generated data with defaults (`-n 8 -s 100`):
 
+***Chimera (new default)*** tests added using musl-1.2.5_git20240705-r3 which is patched to use **mimalloc** with a custom secure/hardened profile by default.
+
 ```
 ./target/release/alloc-perf-test gen-data
 ```
@@ -101,6 +103,14 @@ Below numbers belong to the currently checked out branch.
 #### `-n 8` (default)
 
 ```
+# new default (mimalloc)
+Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf
+  Time (mean ± σ):      4.160 s ±  0.050 s    [User: 18.610 s, System: 6.020 s]
+  Range (min … max):    4.061 s …  4.227 s    10 runs
+```
+
+```
+# old default (scudo)
 Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf
   Time (mean ± σ):     54.290 s ±  2.319 s    [User: 95.083 s, System: 19.967 s]
   Range (min … max):   50.635 s … 58.560 s    10 runs
@@ -121,6 +131,7 @@ Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf
 ```
 
 ```
+# old default (scudo)
 Benchmark 1: SCUDO_OPTIONS=release_to_os_interval_ms=-1 ./target/release/alloc-perf-test test-alloc-perf
   Time (mean ± σ):     13.327 s ±  0.999 s    [User: 39.456 s, System: 15.038 s]
   Range (min … max):   11.791 s … 14.993 s    10 runs
@@ -141,6 +152,14 @@ Benchmark 1: LD_PRELOAD=/snmalloc/build/libsnmallocshim-checks.so ./target/relea
 #### `-n 4` (= CPU cores)
 
 ```
+# new default (mimalloc)
+Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf -n 4
+  Time (mean ± σ):      2.741 s ±  0.121 s    [User: 6.679 s, System: 2.472 s]
+  Range (min … max):    2.597 s …  3.003 s    10 runs
+```
+
+```
+# old default (scudo)
 Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf -n 4
   Time (mean ± σ):     16.500 s ±  0.400 s    [User: 25.316 s, System: 4.900 s]
   Range (min … max):   16.048 s … 17.112 s    10 runs
@@ -161,6 +180,7 @@ Benchmark 1: ./target/release/alloc-perf-test test-alloc-perf -n 4
 ```
 
 ```
+# old default (scudo)
 Benchmark 1: SCUDO_OPTIONS=release_to_os_interval_ms=-1 ./target/release/alloc-perf-test test-alloc-perf -n 4
   Time (mean ± σ):      4.596 s ±  0.257 s    [User: 11.570 s, System: 3.271 s]
   Range (min … max):    4.275 s …  4.986 s    10 runs
@@ -266,8 +286,9 @@ Incidentally (or maybe not so), the fastest allocator is also the closest to `1.
 
 | Test | Degradation |
 |:----:|:----:|
-| Chimera (default) | 1.65857 |
-| Chimera (no release) | 1.46167 |
+| Chimera (new default) | 0.76504 |
+| Chimera (old default) | 1.65857 |
+| Chimera (old default / no release) | 1.46167 |
 | Chimera (`mallocng`) | 1.11129 |
 | Chimera (`oldmalloc`) | 2.61305 |
 | Chimera (`libmimalloc-secure`) | 0.79176 |
@@ -296,8 +317,9 @@ for _ in {1..3}; do [env_vars] ./target/release/alloc-perf-test test-alloc-perf 
 
 | Test | `-n 4` | `-n 8` (default) |
 |:----:|:----:|:--------:|
-| Chimera (default) | 3.86 | 7.23 |
-| Chimera (no release) | 4.14 | 7.78 |
+| Chimera (new default) | 2.70 | 5.16 |
+| Chimera (old default) | 3.86 | 7.23 |
+| Chimera (old default / no release) | 4.14 | 7.78 |
 | Chimera (`mallocng`) | 3.27 | 6.21 |
 | Chimera (`oldmalloc`) | 3.62 | 6.76 |
 | Chimera (`libmimalloc-secure`) | 3.77 | 6.92 |
